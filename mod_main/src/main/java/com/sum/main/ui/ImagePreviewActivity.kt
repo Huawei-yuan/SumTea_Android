@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.sum.common.constant.KEY_URL
 import com.sum.common.manager.FileManager
@@ -15,7 +16,6 @@ import com.sum.framework.utils.getStringFromResource
 import com.sum.glide.setUrl
 import com.sum.main.databinding.ActivityImagePreviewBinding
 import com.sum.main.utils.ImageUtil
-import com.tbruyelle.rxpermissions3.RxPermissions
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -49,16 +49,24 @@ class ImagePreviewActivity : BaseDataBindActivity<ActivityImagePreviewBinding>()
      * 获取权限
      */
     private fun requestPermission() {
-        RxPermissions(this).request(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        ).subscribe { granted ->
-            if (granted) {
+
+        val multiplePermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            if (permissions.all { it.value }) {
+                // 所有权限都被授予
                 saveImage()
             } else {
+                // 至少有一个权限被拒绝
                 TipsToast.showTips(com.sum.common.R.string.default_agree_permission)
             }
         }
+
+        // 请求多个权限
+        multiplePermissionLauncher.launch(arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ))
     }
 
     /**

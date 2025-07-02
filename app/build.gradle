@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'com.sum.tea'
     signingConfigs {
         debug {
             storeFile file('../SumTea.jks')
@@ -88,6 +89,7 @@ dependencies {
     implementation rootProject.depsLibs.navigationFragment
     implementation rootProject.depsLibs.navigationUI
     implementation rootProject.depsLibs.lifecycleCommon
+    implementation rootProject.depsLibs.lifecycleRuntimeKtx
 
     implementation rootProject.depsLibs.roomKtx
     kapt rootProject.depsLibs.roomCompiler
@@ -125,7 +127,8 @@ dependencies {
 
 //    implementation rootProject.depsLibs.cameraX
 
-    implementation rootProject.depsLibs.rxPermission
+//    implementation rootProject.depsLibs.rxPermission
+    implementation rootProject.depsLibs.activityKtx
     implementation rootProject.depsLibs.rxjava
     implementation rootProject.depsLibs.rxandroid
 

@@ -217,7 +217,7 @@ object AppManager {
             val packageName = context.packageName ?: "com.sum.tea"
             pm.getPackageInfo(packageName, 0).versionName
             val pi = pm.getPackageInfo(packageName, 0)
-            versionName = pi.versionName
+            versionName = pi.versionName.toString()
             if (versionName.isNullOrEmpty()) {
                 return ""
             }

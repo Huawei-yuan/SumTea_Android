@@ -11,10 +11,10 @@ ext {
     android = [
             applicationId    : "com.sum.tea",
             //使用exoPlayer编译版本需要到33，而33中有bug,xml写代码没有代码提示
-            compileSdk       : 33,
-            buildToolsVersion: '32.0.0',
-            minSdk           : 21,
-            targetSdk        : 32,
+            compileSdk       : 35,
+            buildToolsVersion: '35.0.0',
+            minSdk           : 23,
+            targetSdk        : 34,
 
             versionCode      : 1,
             versionName      : "1.0.1",
@@ -33,8 +33,8 @@ ext {
             aroutreApiVersion     : '1.5.2',
             arouterCompilerVersion: '1.5.2',
             tbssdkVersion         : '44132',
-            exoPlayerVersion      : '2.18.5',
-            permissionsVersion    : '0.12',
+            exoPlayerVersion      : '2.19.1',
+//            permissionsVersion    : '0.12',
             roomVersion           : '2.5.0',
             rxjavaVersion         : '3.1.6',
             rxandroidVersion      : '3.0.2',
@@ -42,15 +42,18 @@ ext {
     ]
 
     depsLibs = [
-            coreKtx           : 'androidx.core:core-ktx:1.7.0',
-            appcompat         : 'androidx.appcompat:appcompat:1.3.0',
-            material          : 'com.google.android.material:material:1.4.0',
-            constraintlayout  : 'androidx.constraintlayout:constraintlayout:2.0.4',
-            liveDataKtx       : 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1',
-            viewModelKtx      : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1',
-            navigationFragment: 'androidx.navigation:navigation-fragment-ktx:2.3.5',
-            navigationUI      : 'androidx.navigation:navigation-ui-ktx:2.3.5',
-            lifecycleCommon   : 'androidx.lifecycle:lifecycle-common:2.5.0-beta01',
+            coreKtx           : 'androidx.core:core-ktx:1.16.0',
+            appcompat         : 'androidx.appcompat:appcompat:1.5.1',
+            material          : 'com.google.android.material:material:1.7.0',
+            constraintlayout  : 'androidx.constraintlayout:constraintlayout:2.1.4',
+            liveDataKtx       : 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2',
+            viewModelKtx      : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2',
+            navigationFragment: 'androidx.navigation:navigation-fragment-ktx:2.4.0',
+            activityKtx      : 'androidx.activity:activity-ktx:1.9.0',
+
+            navigationUI      : 'androidx.navigation:navigation-ui-ktx:2.4.0',
+            lifecycleCommon   : 'androidx.lifecycle:lifecycle-common:2.6.2',
+            lifecycleRuntimeKtx : 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2',
 
             //room数据库
             roomKtx           : "androidx.room:room-ktx:${dependVersion["roomVersion"]}",
@@ -98,7 +101,7 @@ ext {
 //            cameraX           : "androidx.camera:camera-camera2:${dependVersion["cameraxVersion"]}",
 
             //权限处理
-            rxPermission      : "com.github.tbruyelle:rxpermissions:${dependVersion["permissionsVersion"]}",
+//            rxPermission      : "com.github.tbruyelle:rxpermissions:${dependVersion["permissionsVersion"]}",
             rxjava            : "io.reactivex.rxjava3:rxjava:${dependVersion["rxjavaVersion"]}",
             rxandroid         : "io.reactivex.rxjava3:rxandroid:${dependVersion["rxandroidVersion"]}",
     ]

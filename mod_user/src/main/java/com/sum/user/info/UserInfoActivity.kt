@@ -29,7 +29,6 @@ import com.sum.user.dialog.SelectBirthdayDialog
 import com.sum.user.dialog.ChoosePhotoDialog
 import com.sum.user.dialog.ChooseSexDialog
 import com.sum.common.manager.FileManager
-import com.tbruyelle.rxpermissions3.RxPermissions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -169,22 +168,29 @@ class UserInfoActivity : BaseDataBindActivity<ActivityUserInfoBinding>() {
      * 选择图片弹框
      */
     private fun showChoosePhotoDialog() {
-        RxPermissions(this).request(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-        ).subscribe { granted ->
-            if (granted) {
+        val multiplePermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            if (permissions.all { it.value }) {
+                // 所有权限都被授予
                 ChoosePhotoDialog.Builder(this)
-                        .setPhotoAlbumCall {
-                            openAlbum()
-                        }.setTakePicturesCall {
-                            takePictures()
-                        }.show()
+                    .setPhotoAlbumCall {
+                        openAlbum()
+                    }.setTakePicturesCall {
+                        takePictures()
+                    }.show()
             } else {
+                // 至少有一个权限被拒绝
                 TipsToast.showTips(com.sum.common.R.string.default_agree_permission)
             }
         }
+
+        // 请求多个权限
+        multiplePermissionLauncher.launch(arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ))
     }
 
     /**

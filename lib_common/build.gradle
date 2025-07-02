@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    namespace 'com.sum.common'
     compileSdk rootProject.android.compileSdk
 
     defaultConfig {

@@ -85,7 +85,7 @@ class BaseDialogFragment : AppCompatDialogFragment() {
             mDialog!!
         } else {
             // 不使用 Dialog，替换成 BaseDialog 对象
-            BaseDialog(activity).also { mDialog = it }
+            BaseDialog(activity!!).also { mDialog = it }
         }
     }
 

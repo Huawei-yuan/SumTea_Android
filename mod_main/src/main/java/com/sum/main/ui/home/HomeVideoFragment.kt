@@ -3,6 +3,7 @@ package com.sum.main.ui.home
 import android.Manifest
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.sum.common.constant.KEY_VIDEO_PLAY_LIST
@@ -18,7 +19,6 @@ import com.sum.main.databinding.FragmentHomeVideoBinding
 import com.sum.main.ui.home.adapter.HomeVideoItemAdapter
 import com.sum.main.ui.home.viewmodel.HomeViewModel
 import com.sum.room.entity.VideoInfo
-import com.tbruyelle.rxpermissions3.RxPermissions
 import java.util.ArrayList
 
 /**
@@ -40,18 +40,25 @@ class HomeVideoFragment : BaseMvvmFragment<FragmentHomeVideoBinding, HomeViewMod
         }
 
         videoAdapter.onItemClickListener = { view: View, position: Int ->
-            RxPermissions(this).request(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ).subscribe { granted ->
-                if (granted) {
+            val multiplePermissionLauncher = registerForActivityResult(
+                ActivityResultContracts.RequestMultiplePermissions()
+            ) { permissions ->
+                if (permissions.all { it.value }) {
+                    // 所有权限都被授予
                     ARouter.getInstance().build(VIDEO_ACTIVITY_PLAYER)
-                            .withParcelableArrayList(KEY_VIDEO_PLAY_LIST, videoAdapter.getData() as ArrayList<VideoInfo>)
-                            .navigation()
+                        .withParcelableArrayList(KEY_VIDEO_PLAY_LIST, videoAdapter.getData() as ArrayList<VideoInfo>)
+                        .navigation()
                 } else {
+                    // 至少有一个权限被拒绝
                     TipsToast.showTips(com.sum.common.R.string.default_agree_permission)
                 }
             }
+
+            // 请求多个权限
+            multiplePermissionLauncher.launch(arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ))
         }
     }
 

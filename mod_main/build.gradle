@@ -6,6 +6,7 @@ plugins {
 //apply plugin: 'android-aspectjx'
 
 android {
+    namespace 'com.sum.main'
     compileSdk rootProject.android.compileSdk
 
     defaultConfig {
@@ -70,7 +71,7 @@ dependencies {
     kapt rootProject.depsLibs.arouterCompiler
 
     compileOnly rootProject.depsLibs.tbssdk
-    compileOnly rootProject.depsLibs.rxPermission
+//    compileOnly rootProject.depsLibs.rxPermission
     compileOnly rootProject.depsLibs.rxjava
     compileOnly rootProject.depsLibs.rxandroid
 
